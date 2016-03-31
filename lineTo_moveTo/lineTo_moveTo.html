@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<style>
+	#canvas { 
+		border:1px solid #666;
+	}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="600"></canvas>
+	<script src="../utils.js"></script>
+	<script>
+		window.onload = function() {
+			var canvas = document.getElementById('canvas'),
+				context = canvas.getContext('2d'),
+				mouse = utils.captureMouse( canvas );
+			function onMouseMove() {
+				context.lineTo( mouse.x, mouse.y );
+				context.stroke();
+			}
+			canvas.addEventListener('mousedown', function() {
+				context.beginPath();
+				context.moveTo( mouse.x, mouse.y );
+				canvas.addEventListener('mousemove', onMouseMove, false);
+			}, false);
+			canvas.addEventListener('mouseup', function() {
+				canvas.removeEventListener('mousemove', onMouseMove, false);
+			}, false);
+		};
+	</script>
+</body>
+</html>
