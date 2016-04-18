@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>velocity-angle</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../ball.js"></script>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            ball = new Ball(),
+            speed = 2,
+            angle = 10;
+
+        ball.x = 100;
+        ball.y = 100;
+
+        (function drawFrame() {
+            window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            var radius = angle * Math.PI / 180,
+                vx = Math.cos(radius) * speed,
+                vy = Math.sin(radius) * speed;
+
+            ball.x += vx;
+            ball.y += vy;
+            ball.draw(context);
+        })(); 
+    </script>
+</body>
+</html>

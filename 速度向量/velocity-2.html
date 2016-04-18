@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Velocity-2</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../ball.js"></script>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            ball = new Ball(),
+            vx = 1,
+            vy = -1;
+
+        ball.x = 100;
+        ball.y = 200;
+
+        (function drawFrame() {
+            window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            ball.x += vx;
+            ball.y += vy;
+            ball.draw(context);
+        })();
+    </script>
+</body>
+</html>

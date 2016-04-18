@@ -1,0 +1,118 @@
+三角函数
+
+sine of angle = opposite / hypotenuse
+cosine of angle = adjacent / hypotenuse
+tangent of angle = opposite / adjacent
+
+角度弧度
+
+radians = degrees * Math.PI / 180 ;
+degrees = radians * 180 / Math.PI ; 
+
+朝鼠标（或者任意一点）旋转
+
+dx = mouse.x - object.x;
+dy = mouse.y - object.y;
+object.rotation = Math.atan2(dy, dx) * 180 / Math.PI;
+
+创建波
+
+(function drawFrame() {
+    window.requestAnimationFrame(drawFrame, canvas);
+
+    value = center + Math.sin(angle) * range;
+    angle += speed;
+})();
+
+创建圆形
+
+(function drawFrame() {
+    window.requestAnimationFrame(drawFrame, canvas);
+
+    xposition = centerX + Math.cos(angle) * radius;
+    yposition = centerY + Math.sin(angle) * radius;
+    angle += speed;
+})();
+
+创建椭圆形
+
+(function drawFrame() {
+    window.requestAnimationFrame(drawFrame, canvas);
+
+    xposition = centerX + Math.cos(angle) * radiusX;
+    yposition = centerY + Math.sin(angle) * radiusY;
+    angle += speed;
+})();
+
+获取两点间的距离
+
+dx = x2 - x1;
+dy = y2 - y1;
+dist = Math.sqrt(dx * dx + dy * dy);
+
+
+
+将角速度分解为X、Y轴上的速度向量
+vx = speed * Math.cos(angle);
+vy = speed * Math.sin(angle);
+
+将角加速度分解为X、Y轴上的加速度
+ax = force * Math.cos(angle);
+ay = force * Math.sin(angle);
+
+将加速度加入速度向量
+vx += ax;
+vy += ay;
+
+将速度向量加入位置坐标
+
+object.x += vx;
+object.y += vy;
+
+
+
+移除越界物体 
+if (object.x - object.width / 2 > right ||
+    object.x + object.width / 2 < left ||
+    object.y - object.height / 2 > bottom ||
+    object.y + object.height / 2 < top) {
+    //code to remove object
+}
+重置越界物体
+if (object.x - object.width / 2 > right ||
+    object.x + object.width / 2 < left ||
+    object.y - object.height / 2 > bottom ||
+    object.y + object.height / 2 < top) {
+    //reset object position and velocity
+}
+越界物体的屏幕环绕
+if (object.x - object.width / 2 > right) {
+    object.x = left - object.width / 2;
+}
+else if (object.x + object.width / 2 < left) {
+    object.x = right + object.width / 2;
+}
+if (object.y - object.height / 2 > bottom) {
+    object.y = top - object.height / 2;
+}
+else if (object.y + object.height / 2 < top) {
+    object.y = bottom + object.height / 2;
+}
+
+应用摩擦力(精确)
+speed = Math.sqrt(vx * vx + vy * vy);
+angle = Math.atan2(vy, vx);
+if (speed > friction) {
+    speed -= friction;
+}
+else {
+    speed = 0;
+}
+vx = Math.cos(angle) * speed;
+vy = Math.sin(angle) * speed;
+
+应用摩擦力（简便方法）
+vx *= friction;
+vy *= friction;
+
+

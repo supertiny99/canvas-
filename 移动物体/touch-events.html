@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <title>Touch Events</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <textarea name="" id="log" cols="30" rows="10"></textarea>
+    <script src="../utils.js"></script>
+    <script src="../ball.js"></script>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById('canvas'),
+                context = canvas.getContext('2d'),
+                touch = utils.captureTouch(canvas),
+                log = document.getElementById('log'),
+                ball = new Ball();
+
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.draw(context);
+
+            canvas.addEventListener('touchstart', function (event) {
+                event.preventDefault();
+                if (utils.containsPoint(ball.getBounds(), touch.x, touch.y)) {
+                    log.value = 'in ball: touchstart';
+                }
+                else {
+                    log.value = 'in canvas: touchstart';
+                }
+            }, false);
+
+            canvas.addEventListener('touchend', function (event) {
+                event.preventDefault();
+                if (utils.containsPoint(ball.getBounds(), touch.x, touch.y)) {
+                    log.value = 'in ball: touchend';
+                }
+                else {
+                    log.value = 'in canvas: touchend';
+                }
+            }, false )
+        };
+    </script>
+</body>
+</html>

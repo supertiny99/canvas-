@@ -9,7 +9,8 @@ utils.captureMouse = function (element) {
 		if (event.pageX || event.pageY) {
 			x = event.pageX;
 			y = event.pageY;
-		} else {
+		}
+		else {
 			x = event.clientX + document.body.scrollLeft +
 				document.documentElement.scrollLeft;
 			y = event.clientY + document.body.scrollTop +
@@ -59,6 +60,12 @@ utils.captureTouch = function (element) {
 	return touch;
 };
 
+//返回是否在指定矩形内
+utils.containsPoint = function (rect, x, y) {
+	return !(x < rect.x || x > rect.x + rect.width ||
+			 y < rect.y || y > rect.y + rect.height);
+};
+
 //color2RGB
 utils.colorToRGB = function (color, alpha) {
 	if (typeof color === "string" && color[0] === "#") {
@@ -75,4 +82,29 @@ utils.colorToRGB = function (color, alpha) {
 	} else {
 		return "rgba("+ r +","+ g +","+ b +","+ a +")";
 	}
+};
+
+//parseColor 数字值转十六进制，十六进制转数字值
+utils.parseColor = function (color, toNumber) {
+	if (toNumber === true) {
+		if (typeof color === 'number') {
+			return (color | 0);
+		}
+		if (typeof color === 'string' && color[0] === '#') {
+			color = color.slice(1);
+		}
+		return window.parseInt(color, 16);
+	}
+	else {
+		if (typeof color === 'number') {
+			color = '#' + ('000000' + (color | 0).toString(16)).substr(-6);
+		}
+		return color;
+	}
+};
+utils.randColor = function() {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return 'rgb('+ r +','+ g +','+ b +')';
 };

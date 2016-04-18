@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceleration 2</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../ball.js"></script>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            ball = new Ball(),
+            vx = 0,
+            ax = 0,
+            vy = 0,
+            ay = 0,
+            gravity = 0.02;
+
+        ball.x = canvas.width / 2;
+        ball.y = canvas.width / 2;
+
+        window.addEventListener('keydown', function(event) {
+            switch(event.keyCode){
+                case 37:
+                    ax = -0.1;
+                    break;
+                case 39:
+                    ax = 0.1;
+                    break;
+                case 38:
+                    ay = -0.1;
+                    break;
+                case 40:
+                    ay = 0.1;
+                    break;
+           }
+        }, false);
+
+        window.addEventListener('keyup', function() {
+            ax = 0;
+            ay = 0;
+        }, false);
+
+        (function drawFrame() {
+            window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            vy += ay;
+            vy += gravity;
+            vx += ax;
+            ball.x += vx;
+            ball.y += vy;
+            ball.draw(context);
+        })();
+    </script>
+</body>
+</html>

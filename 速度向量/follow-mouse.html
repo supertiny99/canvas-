@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>follow-mouse</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../arrow.js"></script>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            mouse = utils.captureMouse(canvas),
+            arrow = new Arrow(),
+            speed = 1;
+
+        (function drawFrame() {
+            window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            var dx = mouse.x - arrow.x,
+                dy = mouse.y - arrow.y,
+                angle = Math.atan2(dy, dx),
+                vx = Math.cos(angle) * speed,
+                vy = Math.sin(angle) * speed;
+
+            arrow.rotation = angle;
+            arrow.x += vx;
+            arrow.y += vy;
+            arrow.draw(context);
+        })();            
+    </script>
+</body>
+</html>
