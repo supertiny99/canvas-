@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse Move Drag</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../ball.js"></script>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById('canvas'),
+                context = canvas.getContext('2d'),
+                mouse = utils.captureMouse(canvas);
+                ball = new Ball(),
+                offsetX = 0,
+                offsetY = 0;
+
+            ball.x = canvas.width / 2;
+            ball.y = canvas.width / 2;
+
+            canvas.addEventListener('mousedown', function(event) {
+                if (utils.containsPoint(ball.getBounds(), mouse.x, mouse.y)) {
+                    // 鼠标按下点相对球圆心的偏移量
+                    offsetX = event.offsetX - ball.x;
+                    offsetY = event.offsetY - ball.y;
+                    canvas.addEventListener('mouseup', onMouseUp, false);
+                    canvas.addEventListener('mousemove', onMouseMove, false);
+                }
+            }, false);
+
+            function onMouseUp () {
+                canvas.removeEventListener('mouseup', onMouseUp, false);
+                canvas.removeEventListener('mousemove', onMouseMove, false);
+            }
+
+            function onMouseMove (event) {
+                ball.x = mouse.x - offsetX;
+                ball.y = mouse.y - offsetY;
+            }
+
+            (function drawFrame () {
+                window.requestAnimationFrame(drawFrame, canvas);
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                ball.draw(context);
+            })();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>easing-rotate</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../arrow.js"></script>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById('canvas'),
+                context = canvas.getContext('2d'),
+                arrow = new Arrow(),
+                // mouse = utils.captureMouse(canvas);
+                rotation = 90,
+                easing = 0.05,
+                targetRotation = 270,
+                animRequest;
+
+            arrow.x = canvas.width / 2;
+            arrow.y = canvas.height / 2;
+            (function drawFrame () {
+                animRequest = window.requestAnimationFrame(drawFrame, canvas);
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                rotation += (targetRotation - rotation) * easing;
+                arrow.rotation = rotation * Math.PI / 180;
+                if (Math.abs(targetRotation - rotation) < 1) {
+                    window.cancelAnimationFrame(animRequest);
+                    console.log('done');
+                }
+                arrow.draw(context);
+
+            })();
+        };
+    </script>
+</body>
+</html>

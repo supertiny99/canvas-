@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="../utils.js"></script>
+    <script src="../ball.js"></script>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById('canvas'),
+                context = canvas.getContext('2d'),
+                ball = new Ball(),
+                spring = 0.03,
+                targetX = canvas.width / 2,
+                vx = 0,
+                friction = .95,
+                animRequest;
+
+            ball.y = canvas.height / 2;
+
+            (function drawFrame () {
+                animRequest = window.requestAnimationFrame(drawFrame, canvas);
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                var dx = targetX - ball.x,
+                    ax = dx * spring;
+
+                vx += ax;
+                vx *= friction;
+                ball.x += vx;
+
+                if (Math.abs(vx) < 0.001) {
+                    window.cancelAnimationFrame(animRequest);
+                }
+                ball.draw(context);
+            })();
+        };
+    </script>
+</body>
+</html>

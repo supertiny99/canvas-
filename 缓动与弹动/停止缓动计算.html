@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Easing Off</title>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <textarea name="" id="log" cols="30" rows="10"></textarea>
+  <script src="../utils.js"></script>
+  <script src="../ball.js"></script>
+  <script>
+    window.onload = function () {
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            ball = new Ball(),
+            easing = 0.05,
+            targetX = canvas.width / 2,
+            animRequest;
+
+        ball.y = canvas.height / 2;
+
+        (function drawFrame () {
+            animRequest = window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            var dx = targetX - ball.x;
+
+            if (Math.abs(dx) < 1) {
+                ball.x = targetX;
+                window.cancelAnimationFrame(animRequest);
+                log.value = 'Animation done!';
+            }
+            else {
+                var vx = dx * easing;
+                ball.x += vx;
+            }
+            ball.draw(context);
+        })();
+    };
+  </script>
+</body>
+</html>
