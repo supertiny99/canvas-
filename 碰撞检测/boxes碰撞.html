@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Boxes</title>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <textarea name="" id="log" cols="30" rows="10"></textarea>
+  <script src="../utils.js"></script>
+  <script src="../box.js"></script>
+  <script>
+    var canvas = document.getElementById('canvas'),
+      context = canvas.getContext('2d'),
+      log = document.getElementById('log');
+      mouse = utils.captureMouse(canvas),
+      boxA = new Box(),
+      boxB = new Box();
+
+    boxA.x = canvas.width / 2;
+    boxA.y = canvas.height / 2;
+
+    (function drawFrame () {
+      window.requestAnimationFrame(drawFrame, canvas);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      boxB.x = mouse.x;
+      boxB.y = mouse.y;
+
+      if(utils.intersects(boxA, boxB)) {
+        log.value = 'hit!';
+      }
+      else {
+        log.value = '';
+      }
+
+      boxA.draw(context);
+      boxB.draw(context);
+    })(); 
+  </script>
+</body>
+</html>

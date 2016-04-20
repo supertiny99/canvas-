@@ -65,7 +65,7 @@ utils.containsPoint = function (rect, x, y) {
 	return !(x < rect.x || x > rect.x + rect.width ||
 			 y < rect.y || y > rect.y + rect.height);
 };
-//碰撞检测
+//碰撞检测(矩形范围)
 utils.intersects = function (rectA, rectB) {
 	return !(rectA.x + rectA.width < rectB.x ||
 				rectB.x + rectB.width < rectA.x ||

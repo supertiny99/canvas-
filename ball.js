@@ -1,15 +1,13 @@
 function Ball (radius, color) {
-    if (radius === undefined) { radius = 40; }
-    if (color === undefined) { color = '#f00'}
     this.x = 0;
     this.y = 0;
-    this.radius = radius;
+    this.radius = radius || 40;
     this.vx = 0;
     this.vy = 0;
     this.rotation = 0;
     this.scaleX = 1;
     this.scaleY = 1;
-    this.color = utils.parseColor(color);
+    this.color = utils.parseColor(color) || '#f00';
     this.lineWidth = 1;
 }
 
